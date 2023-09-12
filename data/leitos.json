@@ -1,0 +1,32 @@
+[
+    {   
+        "id": 1,
+        "ocupado": false,
+        "statusLimpeza": false,
+        "pacienteId": ""
+    },
+    {   
+        "id": 2,
+        "ocupado": true,
+        "statusLimpeza": false,
+        "pacienteId": ""
+    },
+    {   
+        "id": 3,
+        "ocupado": false,
+        "statusLimpeza": false,
+        "pacienteId": ""
+    },
+    {   
+        "id": 4,
+        "ocupado": false,
+        "statusLimpeza": false,
+        "pacienteId": ""
+    },
+    {   
+        "id": 5,
+        "ocupado": false,
+        "statusLimpeza": false,
+        "pacienteId": ""
+    }
+]

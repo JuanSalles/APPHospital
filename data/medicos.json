@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "nome": "João da Silva",
+        "especializacao": "pediatra",
+        "numeroDeRegistro": 21681543685,
+        "horarioDeTrabalho":" matutino"
+    },
+    {
+        "id": 2,
+        "nome": "Maria dos Santos Silva",
+        "especializacao": "clinico",
+        "numeroDeRegistro": 21545343685,
+        "horarioDeTrabalho":" matutino"
+    },{
+        "id": 3,
+        "nome": "Carla da Silva",
+        "especializacao": "otorrino",
+        "numeroDeRegistro": 21648748685,
+        "horarioDeTrabalho":" matutino"
+    },
+    {
+        "id": 4,
+        "nome": "Jonas Guedes",
+        "especializacao": "cirurgiao",
+        "numeroDeRegistro": 12344543685,
+        "horarioDeTrabalho":" matutino"
+    }
+]
