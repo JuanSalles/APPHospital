@@ -1,5 +1,7 @@
 import { IPaciente } from "../interfaces/IPaciente";
+import { ListaDeOpcoesID } from "../interfaces/ListaDeOpcoesID";
 import Paciente from "../models/Paciente";
+import novoID from "./novoID";
 
 const meuPrompt = require('prompt-sync')();
 
@@ -10,7 +12,7 @@ export default function cadastrarPaciente(): Paciente{
     const documentoDoPaciente = meuPrompt('Digite o numero do seu documento: ');
 
     const paciente: IPaciente = {
-        id: listaDePacientes.length+1,
+        id: novoID(ListaDeOpcoesID["paciente"]),
         nome: nomeDoPaciente,
         documento: documentoDoPaciente,
         historicoMedico: [],
@@ -20,11 +22,10 @@ export default function cadastrarPaciente(): Paciente{
 
     listaDePacientes.push(paciente);
 
-    console.log(listaDePacientes);
+  
 
     fs.writeFile('./data/pacientes.json', JSON.stringify(listaDePacientes), (err: Error) => {
         if (err) throw err;
-        console.log('Paciente salvo no banco de dados!');
     })
     
     return new Paciente(paciente)

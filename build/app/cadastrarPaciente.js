@@ -1,4 +1,6 @@
-import Paciente from "../models/Paciente";
+import { ListaDeOpcoesID } from "../interfaces/ListaDeOpcoesID.js";
+import Paciente from "../models/Paciente.js";
+import novoID from "./novoID.js";
 const meuPrompt = require('prompt-sync')();
 export default function cadastrarPaciente() {
     const fs = require('fs');
@@ -6,7 +8,7 @@ export default function cadastrarPaciente() {
     const nomeDoPaciente = meuPrompt('Digite o seu nome: ');
     const documentoDoPaciente = meuPrompt('Digite o numero do seu documento: ');
     const paciente = {
-        id: listaDePacientes.length + 1,
+        id: novoID(ListaDeOpcoesID["paciente"]),
         nome: nomeDoPaciente,
         documento: documentoDoPaciente,
         historicoMedico: [],

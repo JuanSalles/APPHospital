@@ -1,10 +1,14 @@
+import inquirer from "inquirer";
+import novoID from "../app/novoID";
 import salvarConsulta from "../app/salvarConsulta";
 import { IPaciente } from "../interfaces/IPaciente";
-import Consulta from "./Consulta";
+import { ListaDeOpcoesID } from "../interfaces/ListaDeOpcoesID";
 import Diagnostico from "./Diagnostico";
+import { IMedico } from "../interfaces/IMedico";
 import Medico from "./Medico";
-
-const meuPrompt = require('prompt-sync')();
+import { IHistoricoDeConsulta } from "../interfaces/IHistoricoDeConsultas";
+import { IConsultasMarcadas } from "../interfaces/IConsultasMarcadas";
+import Consulta from "./Consulta";
 
 const listaDeMedicos = require('../../data/medicos.json')
 
@@ -12,56 +16,71 @@ export default class Paciente{
     private id: number
     private nome: string
     private documento: string
-    private historicoMedico: Consulta[]
-    private diagnosticosAnteriores: Diagnostico[]
-    private consultasAgendadas: Consulta[]
+    private _historicoMedico: IHistoricoDeConsulta[]
+    private _diagnosticosAnteriores: Diagnostico[]
+    private _consultasAgendadas: IConsultasMarcadas[]
 
     constructor(paciente: IPaciente){
         this.id = paciente.id
         this.nome = paciente.nome
         this.documento = paciente.documento
-        this.historicoMedico = paciente.historicoMedico
-        this.diagnosticosAnteriores = paciente.diagnosticosAnteriores
-        this.consultasAgendadas = paciente.consultasAgendadas
+        this._historicoMedico = paciente.historicoMedico
+        this._diagnosticosAnteriores = paciente.diagnosticosAnteriores
+        this._consultasAgendadas = paciente.consultasAgendadas
     }
 
-    marcarConsulta(){
-        let condicao = true
-        let medicoEscolhido
-        let DataEHora = meuPrompt('Digite a data e hora no formato "DD/MM/YY HH:MM": ');
-    
-        console.log('Médicos disponiveis na clinica:\n');
+    get consultasAgendadas (): IConsultasMarcadas[]{
+        return this._consultasAgendadas
+    }
+
+    async marcarConsulta(){
+        let medicoEscolhido: Medico
+
+        const listaSimplificada = listaDeMedicos.map((medico: IMedico) => medico.nome);
+        console.clear()
+
         console.table(listaDeMedicos);
 
-        while(condicao){
-            let medicoID = parseInt(meuPrompt('Digite o ID do medico desejado: '));
+        await inquirer.prompt([
+            {
+                name: "medico",
+                message: "Ecolha o medico: ",
+                type: "list",
+                choices: listaSimplificada
+            },
+            {
+                name: "dataEHora",
+                message: 'Digite a data e hora no formato "MM/DD/YY HH:MM": ',
+                type: "input"
+            }
+        ])
+        .then((answer: any) => {
+            medicoEscolhido = listaDeMedicos.find((medico: IMedico) => medico.nome == answer.medico);
+            
+            const dataNaoFormatada = new Date(answer.dataEHora);
+            const dataEHora = dataNaoFormatada.toLocaleString();
 
-            medicoEscolhido = listaDeMedicos.find((element: Medico) => element.id == medicoID)
+            const consulta = {
+                id: novoID(ListaDeOpcoesID["consulta"]),
+                paciente: this.nome,
+                medico: medicoEscolhido.nome,
+                dataEHora: dataEHora,
+                diagnosticos: [],
+                medicamentosPrescritos: []
+            }
+    
+            if(medicoEscolhido) {
+                salvarConsulta(consulta, this.id);
+                console.log("Consulta Marcada")
+            }
 
-            if(medicoEscolhido) condicao = false;
+            
+        });
+    
 
-        }
+    }
 
-        const paciente: IPaciente = {
-            nome: this.nome,
-            id: this.id,
-            documento: this.documento,
-            historicoMedico: this.historicoMedico,
-            diagnosticosAnteriores: this.diagnosticosAnteriores,
-            consultasAgendadas: this.consultasAgendadas
-        }
-
-        const consulta = {
-            paciente: paciente,
-            medico: medicoEscolhido,
-            dataEHora: DataEHora,
-            diagnosticos: [],
-            medicamentosPrescritos: []
-        }
-
-
-        salvarConsulta(consulta);
-
-        console.log("Consulta Marcada")
+    consultaFinalizada(consulta: Consulta, diagnostico: Diagnostico){
+        
     }
 }

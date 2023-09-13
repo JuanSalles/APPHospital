@@ -7,7 +7,6 @@
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "ts-node ./src/app/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^9.2.11",
+    "inquirer": "^8.0.0",
     "prompt-sync": "^4.2.0",
     "ts-node": "^10.9.1"
   }
