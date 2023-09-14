@@ -27,6 +27,7 @@ Atividade de fixação do modulo 3 do Santander coders 2023.1, ministrado pela A
 #Imagens dos Resultados
 
 #Comentarios
+
     A aplicação cresceu um pouco mais do que o planeja e eu tive um pouco de dificuldade com as exportações de modulos utilizando commonJS, 
     uma incompatibilidade com as versões atuais do modulo "inquirer", até descorbrir o problema suei bastante.
     Estou realizando em outro repositorio esse mesmo projeto com uma API Rest e MongoDb, creio que finalizarei por la.
